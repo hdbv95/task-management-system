@@ -1,0 +1,46 @@
+# Virtual environment
+venv/
+.env
+*.env
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django-specific files
+db.sqlite3
+media/
+staticfiles/
+
+# Logs and debug files
+*.log
+logs/
+debug.log
+
+# Compiled files
+*.pyc
+*.pyo
+*.pyd
+
+# VS Code settings
+.vscode/
+
+# IDE files
+.idea/
+*.iml
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Docker
+docker-compose.override.yml
+
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Pytest cache
+.pytest_cache/
