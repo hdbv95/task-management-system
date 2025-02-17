@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
 from rest_framework import status
+from rest_framework_simplejwt.tokens import RefreshToken
 from .models import Task
 
 def create_tasks_for_test(user, n):
@@ -16,7 +17,9 @@ def create_tasks_for_test(user, n):
 class TaskTests(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='testuser', password='testpass')
-        self.client.force_authenticate(user=self.user)
+        refresh = RefreshToken.for_user(self.user)
+        self.token = str(refresh.access_token)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.token}')
 
     def test_create_task(self):
         data = {
@@ -25,13 +28,14 @@ class TaskTests(APITestCase):
             "due_date": "2025-12-31",
             "status": "pending",
             "assigned_to": self.user.id
-        }
+        }        
         response = self.client.post("/api/tasks/", data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data["title"], "Test Task")
+        self.assertEqual(response.data["assigned_to"], self.user.id)
 
     def test_get_tasks(self):
-        create_tasks_for_test(self.user, 5)
+        create_tasks_for_test(self.user, 5)        
         response = self.client.get("/api/tasks/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertGreater(len(response.data['results']), 0)
@@ -76,7 +80,7 @@ class TaskTests(APITestCase):
             due_date="2025-12-31",
             status="pending",
             assigned_to=self.user
-        )
+        )        
         response = self.client.delete(f"/api/tasks/{task.id}/")
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         response = self.client.get(f"/api/tasks/{task.id}/")
@@ -91,3 +95,53 @@ class TaskTests(APITestCase):
             assigned_to=self.user
         )
         self.assertEqual(str(task), "Test Task")
+
+    def test_no_token(self):
+        self.client.credentials()
+        data = {
+            "title": "Unauthorized Task",
+            "description": "This should fail due to no token",
+            "due_date": "2025-12-31",
+            "status": "pending",
+            "assigned_to": self.user.id
+        }
+        response = self.client.post("/api/tasks/", data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_invalid_token(self):
+        self.client.credentials(HTTP_AUTHORIZATION="Bearer invalid_token")
+        data = {
+            "title": "Invalid Token Task",
+            "description": "This should fail due to invalid token",
+            "due_date": "2025-12-31",
+            "status": "pending",
+            "assigned_to": self.user.id
+        }
+        response = self.client.post("/api/tasks/", data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_create_task_missing_field(self):
+        data = {
+            "title": "Incomplete Task",
+            "status": "pending",
+            # Missing 'due_date' and 'assigned_to'
+        }
+        response = self.client.post("/api/tasks/", data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('due_date', response.data)
+        self.assertIn('assigned_to', response.data)
+
+    def test_update_nonexistent_task(self):
+        data = {
+            "title": "Updated Task",
+            "description": "This task does not exist",
+            "due_date": "2025-11-30",
+            "status": "completed",
+            "assigned_to": self.user.id
+        }        
+        response = self.client.put("/api/tasks/999/", data)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_delete_nonexistent_task(self):
+        response = self.client.delete("/api/tasks/999/")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
