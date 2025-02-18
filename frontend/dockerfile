@@ -1,0 +1,18 @@
+FROM node:22.13.1-slim
+
+WORKDIR /app
+
+# Copy package.json and package-lock.json from frontend/tasks-app
+COPY frontend/tasks-app/package.json frontend/tasks-app/package-lock.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the frontend application files into the container
+COPY frontend/tasks-app/ .
+
+# Expose the port that Vite runs on (default is 5173)
+EXPOSE 5173
+
+# Command to start the React app using Vite
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]

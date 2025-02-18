@@ -13,17 +13,17 @@ ENV PATH="/root/.local/bin:$PATH"
 
 WORKDIR /app
 
-# Copy the poetry lock files first to install dependencies
-COPY pyproject.toml poetry.lock /app/
+# Copy only the necessary Poetry files first to install dependencies
+COPY backend/pyproject.toml backend/poetry.lock /app/
 
 # Install dependencies via Poetry
 RUN poetry install --no-root
 
-# Copy the rest of the application files
-COPY . /app/
+# Copy the rest of the backend application files (from the backend directory)
+COPY backend/ /app/
 
-# Expose the port the app runs on
+# Expose the port the app runs on (Django typically runs on port 8000)
 EXPOSE 8000
 
-# Command to run the application, migrate the database and start the server
+# Command to run the application, migrate the database, and start the Django server
 CMD ["sh", "-c", "poetry run python task_manager/manage.py migrate && poetry run python task_manager/manage.py runserver 0.0.0.0:8000"]

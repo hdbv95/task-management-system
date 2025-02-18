@@ -1,12 +1,22 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  web:
-    build: .
-    container_name: task-management-system
-    volumes:
-      - .:/app
+  backend:
+    build:
+      context: . # Root context for the whole project
+      dockerfile: backend/Dockerfile # Explicit path to the backend Dockerfile
+    container_name: task-management-backend
     ports:
-      - "8000:8000"
+      - "8000:8000" # Expose the Django app on port 8000
     environment:
       - PYTHONUNBUFFERED=1
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile # Assume the frontend Dockerfile is in the frontend folder
+    container_name: task-management-frontend
+    ports:
+      - "5173:5173" # Expose Vite's default dev server port
+    depends_on:
+      - backend # Ensure the backend is started before the frontend
