@@ -47,3 +47,9 @@ yarn.lock
 
 # Pytest coverage data
 .coverage
+
+# Temporary files for Poetry environments
+.poetry-env/
+
+# Poetry virtual environment files
+__pypackages__/
