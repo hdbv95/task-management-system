@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.throttling import UserRateThrottle
+from django.core.cache import cache
 from .models import Task
 
 
@@ -149,3 +151,59 @@ class TaskTests(APITestCase):
     def test_delete_nonexistent_task(self):
         response = self.client.delete("/api/tasks/999/")
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+
+class TaskThrottleTests(APITestCase):
+    def setUp(self):
+        cache.clear()
+        self.user = User.objects.create_user(
+            username="testuser", password="testpass"
+        )
+        refresh = RefreshToken.for_user(self.user)
+        self.token = str(refresh.access_token)
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {self.token}")
+        self.throttle_rate = 20
+
+    def test_task_list_throttling(self):
+        for _ in range(self.throttle_rate):
+            response = self.client.get("/api/tasks/")
+            self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        response = self.client.get("/api/tasks/")
+        self.assertEqual(
+            response.status_code, status.HTTP_429_TOO_MANY_REQUESTS
+        )
+
+    def test_task_create_throttling(self):
+        data = {
+            "title": "Throttle Test",
+            "description": "Testing rate limit",
+            "due_date": "2025-12-31",
+            "status": "pending",
+            "assigned_to": self.user.id,
+        }
+
+        for _ in range(self.throttle_rate):
+            response = self.client.post("/api/tasks/", data)
+            self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        response = self.client.post("/api/tasks/", data)
+        self.assertEqual(
+            response.status_code, status.HTTP_429_TOO_MANY_REQUESTS
+        )
+
+    def test_throttle_resets_after_time(self):
+        UserRateThrottle.THROTTLE_RATES["user"] = "1/min"
+        for _ in range(self.throttle_rate):
+            self.client.get("/api/tasks/")
+        response = self.client.get("/api/tasks/")
+        self.assertEqual(
+            response.status_code, status.HTTP_429_TOO_MANY_REQUESTS
+        )
+
+        # Simulate a reset of the throttle by overriding the throttle logic
+        # Reset it to allow requests again
+        UserRateThrottle.THROTTLE_RATES["user"] = "20/min"
+
+        response = self.client.get("/api/tasks/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)

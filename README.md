@@ -97,7 +97,11 @@ ReDoc provides detailed view of the API endpoints, ideal for documentation.
 Unit tests are written for the API using pytest. To run the tests:
 
 1. Ensure you have all the required dependencies installed.
-2. Run tests using:
+2. Go to the app directory
+```console
+cd task_manager
+```
+3. Run tests using:
 ```console
 poetry run pytest
 poetry run ptw     # this will run on watch mode for developing

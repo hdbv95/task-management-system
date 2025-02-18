@@ -1,3 +1,4 @@
+from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
 from rest_framework import viewsets, filters
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -16,6 +17,7 @@ class TaskViewSet(viewsets.ModelViewSet):
     ordering_fields = ["due_date"]
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    throttle_classes = [UserRateThrottle, AnonRateThrottle]
 
     @swagger_auto_schema(
         operation_description=(

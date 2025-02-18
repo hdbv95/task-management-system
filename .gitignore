@@ -45,6 +45,9 @@ yarn.lock
 # Pytest cache
 .pytest_cache/
 
+# mypy  cache
+.mypy_cache/
+
 # Pytest coverage data
 .coverage
 
