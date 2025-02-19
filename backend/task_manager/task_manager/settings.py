@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-from typing import List
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +27,7 @@ SECRET_KEY = (
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS: List[str] = []
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "backend", "frontend"]
 
 
 # Application definition
@@ -44,10 +43,12 @@ INSTALLED_APPS = [
     "drf_yasg",
     "rest_framework_simplejwt",
     "django_filters",
+    "corsheaders",
     "tasks",
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -157,7 +158,7 @@ REST_FRAMEWORK = {
         "rest_framework.throttling.UserRateThrottle",
     ],
     "DEFAULT_THROTTLE_RATES": {
-        "anon": "5/min",
+        "anon": "5/sec",
         "user": "20/min",
     },
 }
@@ -172,3 +173,8 @@ SWAGGER_SETTINGS = {
         }
     }
 }
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://frontend:5173",  # Docker
+]

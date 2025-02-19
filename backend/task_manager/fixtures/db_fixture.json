@@ -1,0 +1,562 @@
+[
+  {
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+      "action_time": "2025-02-17T16:18:10.549Z",
+      "user": 1,
+      "content_type": 7,
+      "object_id": "1",
+      "object_repr": "Test task",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+      "action_time": "2025-02-17T16:18:58.244Z",
+      "user": 1,
+      "content_type": 7,
+      "object_id": "2",
+      "object_repr": "Test task 2",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+      "action_time": "2025-02-17T16:32:55.684Z",
+      "user": 1,
+      "content_type": 4,
+      "object_id": "2",
+      "object_repr": "newUser",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 4,
+    "fields": {
+      "action_time": "2025-02-17T16:33:20.831Z",
+      "user": 1,
+      "content_type": 7,
+      "object_id": "2",
+      "object_repr": "Test task 2",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Assigned to\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 5,
+    "fields": {
+      "action_time": "2025-02-18T18:36:24.918Z",
+      "user": 1,
+      "content_type": 7,
+      "object_id": "3",
+      "object_repr": "task 3",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 6,
+    "fields": {
+      "action_time": "2025-02-18T18:37:29.481Z",
+      "user": 1,
+      "content_type": 7,
+      "object_id": "4",
+      "object_repr": "New task",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 7,
+    "fields": {
+      "action_time": "2025-02-18T18:40:30.032Z",
+      "user": 1,
+      "content_type": 7,
+      "object_id": "3",
+      "object_repr": "task 3",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Status\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 8,
+    "fields": {
+      "action_time": "2025-02-18T20:27:36.182Z",
+      "user": 1,
+      "content_type": 7,
+      "object_id": "4",
+      "object_repr": "New task",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Description\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 9,
+    "fields": {
+      "action_time": "2025-02-18T22:14:20.005Z",
+      "user": 1,
+      "content_type": 7,
+      "object_id": "8",
+      "object_repr": "Modal Test",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Status\"]}}]"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 1,
+    "fields": {
+      "name": "Can add log entry",
+      "content_type": 1,
+      "codename": "add_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 2,
+    "fields": {
+      "name": "Can change log entry",
+      "content_type": 1,
+      "codename": "change_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 3,
+    "fields": {
+      "name": "Can delete log entry",
+      "content_type": 1,
+      "codename": "delete_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 4,
+    "fields": {
+      "name": "Can view log entry",
+      "content_type": 1,
+      "codename": "view_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 5,
+    "fields": {
+      "name": "Can add permission",
+      "content_type": 2,
+      "codename": "add_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 6,
+    "fields": {
+      "name": "Can change permission",
+      "content_type": 2,
+      "codename": "change_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 7,
+    "fields": {
+      "name": "Can delete permission",
+      "content_type": 2,
+      "codename": "delete_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 8,
+    "fields": {
+      "name": "Can view permission",
+      "content_type": 2,
+      "codename": "view_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 9,
+    "fields": {
+      "name": "Can add group",
+      "content_type": 3,
+      "codename": "add_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 10,
+    "fields": {
+      "name": "Can change group",
+      "content_type": 3,
+      "codename": "change_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 11,
+    "fields": {
+      "name": "Can delete group",
+      "content_type": 3,
+      "codename": "delete_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 12,
+    "fields": {
+      "name": "Can view group",
+      "content_type": 3,
+      "codename": "view_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 13,
+    "fields": {
+      "name": "Can add user",
+      "content_type": 4,
+      "codename": "add_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 14,
+    "fields": {
+      "name": "Can change user",
+      "content_type": 4,
+      "codename": "change_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 15,
+    "fields": {
+      "name": "Can delete user",
+      "content_type": 4,
+      "codename": "delete_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 16,
+    "fields": {
+      "name": "Can view user",
+      "content_type": 4,
+      "codename": "view_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 17,
+    "fields": {
+      "name": "Can add content type",
+      "content_type": 5,
+      "codename": "add_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 18,
+    "fields": {
+      "name": "Can change content type",
+      "content_type": 5,
+      "codename": "change_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 19,
+    "fields": {
+      "name": "Can delete content type",
+      "content_type": 5,
+      "codename": "delete_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 20,
+    "fields": {
+      "name": "Can view content type",
+      "content_type": 5,
+      "codename": "view_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 21,
+    "fields": {
+      "name": "Can add session",
+      "content_type": 6,
+      "codename": "add_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 22,
+    "fields": {
+      "name": "Can change session",
+      "content_type": 6,
+      "codename": "change_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 23,
+    "fields": {
+      "name": "Can delete session",
+      "content_type": 6,
+      "codename": "delete_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 24,
+    "fields": {
+      "name": "Can view session",
+      "content_type": 6,
+      "codename": "view_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 25,
+    "fields": {
+      "name": "Can add task",
+      "content_type": 7,
+      "codename": "add_task"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 26,
+    "fields": {
+      "name": "Can change task",
+      "content_type": 7,
+      "codename": "change_task"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 27,
+    "fields": {
+      "name": "Can delete task",
+      "content_type": 7,
+      "codename": "delete_task"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 28,
+    "fields": {
+      "name": "Can view task",
+      "content_type": 7,
+      "codename": "view_task"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$In01LxL64zImIX56bt2xIK$BpOp6I8OKlQxD+OJAn0NOnMWfl3BrU04W9iI8oSAtvU=",
+      "last_login": "2025-02-17T16:06:35.721Z",
+      "is_superuser": true,
+      "username": "admin",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2025-02-17T16:06:14.788Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$EBN9k5VkSasvrsvhIKbscx$+LvU5t/Hi7Xw9ePoGVwlFJ1FoU3nJpClLs2n/XPmx/I=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "newUser",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2025-02-17T16:32:55.013Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 1,
+    "fields": {
+      "app_label": "admin",
+      "model": "logentry"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 2,
+    "fields": {
+      "app_label": "auth",
+      "model": "permission"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 3,
+    "fields": {
+      "app_label": "auth",
+      "model": "group"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 4,
+    "fields": {
+      "app_label": "auth",
+      "model": "user"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 5,
+    "fields": {
+      "app_label": "contenttypes",
+      "model": "contenttype"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 6,
+    "fields": {
+      "app_label": "sessions",
+      "model": "session"
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 7,
+    "fields": {
+      "app_label": "tasks",
+      "model": "task"
+    }
+  },
+  {
+    "model": "sessions.session",
+    "pk": "f7d3bgbsc1ewmelwnfm3zgg0dlxrcims",
+    "fields": {
+      "session_data": ".eJxVjDsOwjAQBe_iGln-RF4vJT1niHZtLw4gW8qnQtwdIqWA9s3Me6mRtrWO21LmccrqrKw6_W5M6VHaDvKd2q3r1Ns6T6x3RR900deey_NyuH8HlZb6rcmZjDgAgjCAiTawAyRmI2K9EOcILAFTdkjRFXQ-oRkkeiMByKj3B-PMN-c:1tk3dj:eJWDeyMdGuywLXZ0mndXQGWcAteo8fahC6gytX7z_b8",
+      "expire_date": "2025-03-03T16:06:35.724Z"
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 2,
+    "fields": {
+      "title": "Test task 2",
+      "description": "Updated from front-end",
+      "due_date": "2025-02-17",
+      "status": "in_progress",
+      "assigned_to": 2,
+      "created_at": "2025-02-17T16:18:58.241Z",
+      "updated_at": "2025-02-19T03:45:04.517Z"
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 3,
+    "fields": {
+      "title": "task 3",
+      "description": "3rd task created",
+      "due_date": "2025-02-27",
+      "status": "in_progress",
+      "assigned_to": 2,
+      "created_at": "2025-02-18T18:36:24.916Z",
+      "updated_at": "2025-02-19T00:05:08.995Z"
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 4,
+    "fields": {
+      "title": "New task edited",
+      "description": "New task Django",
+      "due_date": "2025-02-18",
+      "status": "pending",
+      "assigned_to": 1,
+      "created_at": "2025-02-18T18:37:29.478Z",
+      "updated_at": "2025-02-18T20:38:33.859Z"
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 8,
+    "fields": {
+      "title": "Modal Test",
+      "description": "this is a modal test",
+      "due_date": "2025-02-18",
+      "status": "pending",
+      "assigned_to": 2,
+      "created_at": "2025-02-18T22:14:11.784Z",
+      "updated_at": "2025-02-19T00:05:49.023Z"
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 9,
+    "fields": {
+      "title": "New task",
+      "description": "Created from front-end",
+      "due_date": "2027-01-20",
+      "status": "pending",
+      "assigned_to": 2,
+      "created_at": "2025-02-19T00:35:11.284Z",
+      "updated_at": "2025-02-19T00:35:16.986Z"
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 10,
+    "fields": {
+      "title": "new task test",
+      "description": "Clears form on save",
+      "due_date": "2025-02-19",
+      "status": "in_progress",
+      "assigned_to": 1,
+      "created_at": "2025-02-19T00:39:04.078Z",
+      "updated_at": "2025-02-19T00:39:04.078Z"
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 11,
+    "fields": {
+      "title": "Test",
+      "description": "Added from fe",
+      "due_date": "2025-02-19",
+      "status": "pending",
+      "assigned_to": 1,
+      "created_at": "2025-02-19T00:43:01.667Z",
+      "updated_at": "2025-02-19T00:43:01.667Z"
+    }
+  }
+]

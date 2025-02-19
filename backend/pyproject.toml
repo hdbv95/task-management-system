@@ -39,6 +39,7 @@ sqlparse = "==0.5.3"
 tzdata = "==2025.1"
 uritemplate = "==4.1.1"
 watchdog = "==6.0.0"
+django-cors-headers = "^4.7.0"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^4.1.0"

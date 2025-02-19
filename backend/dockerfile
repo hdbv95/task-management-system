@@ -22,8 +22,14 @@ RUN poetry install --no-root
 # Copy the rest of the backend application files (from the backend directory)
 COPY backend/ /app/
 
+# Copy the setup_db.sh script to the container
+COPY backend/setup_db.sh /app/setup_db.sh
+
+# Make sure the setup_db.sh script is executable
+RUN chmod +x /app/setup_db.sh
+
 # Expose the port the app runs on (Django typically runs on port 8000)
 EXPOSE 8000
 
-# Command to run the application, migrate the database, and start the Django server
-CMD ["sh", "-c", "poetry run python task_manager/manage.py migrate && poetry run python task_manager/manage.py runserver 0.0.0.0:8000"]
+# Command to run the setup_db.sh script, apply migrations, and start the Django server
+CMD ["sh", "-c", "/app/setup_db.sh && poetry run python task_manager/manage.py migrate && poetry run python task_manager/manage.py runserver 0.0.0.0:8000"]

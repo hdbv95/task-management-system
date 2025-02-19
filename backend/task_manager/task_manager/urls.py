@@ -9,6 +9,7 @@ from swaggers.task_swagger import task_schema_view
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("tasks.urls")),
+    path("api/", include("users.urls")),
     path(
         "api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"
     ),
