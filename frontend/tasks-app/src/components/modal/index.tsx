@@ -14,21 +14,23 @@ import {
 } from "@mui/material";
 import { Status, Task, UserApiResponse } from "../../types";
 import { getUsers } from "../../utils/api";
+import { useTaskContext } from "../../context/TaskContext";
 
 interface ModalProps {
   onModalClose: () => void;
-  onSaveNewTask: () => void;
   onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   newTask: Task;
 }
 
 const Modal: React.FC<ModalProps> = ({
   onModalClose,
-  onSaveNewTask,
   onInputChange,
   newTask,
 }) => {
+  const { addTask } = useTaskContext();
   const [users, setUsers] = useState<UserApiResponse>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -36,6 +38,7 @@ const Modal: React.FC<ModalProps> = ({
         const response = await getUsers();
         setUsers(response);
       } catch (error) {
+        setError("Failed to load users");
         console.error("Failed to load users", error);
       }
     };
@@ -60,8 +63,22 @@ const Modal: React.FC<ModalProps> = ({
     ? String(newTask.assigned_to)
     : "";
 
+  const handleSaveNewTask = async () => {
+    setError(null);
+    setLoading(true);
+    try {
+      await addTask(newTask);
+      onModalClose();
+    } catch (error) {
+      setError(`Failed to save the task. Please try again. ${error}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Dialog open={true} onClose={onModalClose}>
+      {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
       <DialogTitle>Add New Task</DialogTitle>
       <DialogContent>
         <TextField
@@ -131,7 +148,7 @@ const Modal: React.FC<ModalProps> = ({
         <Button onClick={onModalClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={onSaveNewTask} color="primary">
+        <Button onClick={handleSaveNewTask} color="primary" disabled={loading}>
           Save
         </Button>
       </DialogActions>

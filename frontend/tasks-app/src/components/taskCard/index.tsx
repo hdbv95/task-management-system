@@ -9,19 +9,10 @@ import { useState } from "react";
 import TaskCardView from "./taskCardView";
 import TaskCardEditForm from "./taskCardEditForm";
 import { Status, Task } from "../../types";
-import { updateTask, deleteTask } from "../../utils/api";
+import { useTaskContext } from "../../context/TaskContext";
 
-interface TaskCardProps extends Task {
-  onTaskUpdate: (updatedTask: Task) => void;
-  onTaskDelete: (taskId: number) => void;
-}
-
-const TaskCard: React.FC<TaskCardProps> = ({
-  onTaskUpdate,
-  onTaskDelete,
-  id,
-  ...task
-}) => {
+const TaskCard: React.FC<Task> = (task) => {
+  const { updateContextTask, deleteContextTask } = useTaskContext();
   const [isEditing, setIsEditing] = useState(false);
   const [editedTask, setEditedTask] = useState(task);
   const [error, setError] = useState<string | null>(null);
@@ -35,9 +26,8 @@ const TaskCard: React.FC<TaskCardProps> = ({
     setLoading(true);
     setError(null);
     try {
-      await updateTask({ id, ...editedTask });
+      await updateContextTask(editedTask);
       setIsEditing(false);
-      onTaskUpdate({ id, ...editedTask });
     } catch (error) {
       setError(`Failed to save the task. Please try again. ${error}`);
     } finally {
@@ -66,8 +56,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
     setDeleting(true);
     setError(null);
     try {
-      await deleteTask(id);
-      onTaskDelete(id);
+      await deleteContextTask(task.id);
     } catch (error) {
       setError(`Failed to delete the task. Please try again. ${error}`);
     } finally {
@@ -81,10 +70,10 @@ const TaskCard: React.FC<TaskCardProps> = ({
       className="h-full w-full shadow-lg rounded-xl border border-gray-200"
     >
       {!isEditing ? (
-        <TaskCardView id={id} {...task} />
+        <TaskCardView {...task} />
       ) : (
         <TaskCardEditForm
-          task={{ id, ...editedTask }}
+          task={editedTask}
           handleChange={handleChange}
           handleStatusChange={handleStatusChange}
         />

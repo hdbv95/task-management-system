@@ -4,8 +4,9 @@ import { Container, Fab } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import Modal from "../../components/modal";
 import TaskCard from "../../components/taskCard";
-import { createTask, getTasks } from "../../utils/api";
+import { getTasks } from "../../utils/api";
 import { TaskApiResponse, Task } from "../../types";
+import { useTaskContext } from "../../context/TaskContext";
 
 const emptyTask: Task = {
   id: 0,
@@ -20,12 +21,11 @@ const emptyTask: Task = {
 };
 
 function Home() {
+  const { tasks, setTasks, addTask } = useTaskContext();
   const [data, setData] = useState<TaskApiResponse>();
   const [error, setError] = useState<string | null>(null);
   const [openModal, setOpenModal] = useState(false);
   const [newTask, setNewTask] = useState<Task>(emptyTask);
-
-  const [loadedTasks, setLoadedTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(false);
 
   const getGridColumns = (count: number) => {
@@ -40,7 +40,7 @@ function Home() {
       try {
         const response = await getTasks();
         setData(response);
-        setLoadedTasks(response.results);
+        setTasks(response.results);
       } catch (error) {
         setError(`Failed to obtain token: ${error}`);
       } finally {
@@ -48,21 +48,7 @@ function Home() {
       }
     };
     fetchData();
-  }, []);
-
-  const handleTaskUpdate = (updatedTask: Task) => {
-    setLoadedTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === updatedTask.id ? updatedTask : task,
-      ),
-    );
-  };
-
-  const handleTaskDelete = (taskId: number) => {
-    setLoadedTasks((prevTasks) =>
-      prevTasks.filter((task) => task.id !== taskId),
-    );
-  };
+  }, [setTasks]);
 
   const handleAddTask = () => {
     setOpenModal(true);
@@ -71,21 +57,6 @@ function Home() {
   const handleCloseModal = () => {
     setOpenModal(false);
     setNewTask(emptyTask);
-  };
-
-  const handleSaveNewTask = async () => {
-    setError(null);
-    setLoading(true);
-    try {
-      const savedTask = await createTask(newTask);
-      setLoadedTasks((prevTasks) => [savedTask, ...prevTasks]);
-      setOpenModal(false);
-      setNewTask(emptyTask);
-    } catch (error) {
-      setError(`Failed to save the task. Please try again. ${error}`);
-    } finally {
-      setLoading(false);
-    }
   };
 
   const handleInputChange = (
@@ -99,19 +70,13 @@ function Home() {
   };
 
   const loadMoreTasks = async () => {
-    if (!data || loading) return; // Exit if no data or if loading
-    if (!data.next) return;
+    if (!data?.next || loading) return; // Exit if no data or if loading
 
     setLoading(true);
     try {
       const nextPageResponse = await getTasks(data.next);
       setData(nextPageResponse);
-      setLoadedTasks((prevTasks) => {
-        const allTasks = [...prevTasks, ...nextPageResponse.results];
-        return Array.from(new Set(allTasks.map((task) => task.id))).map(
-          (id) => allTasks.find((task) => task.id === id)!,
-        ); // Ensure no duplicates
-      });
+      addTask(nextPageResponse.results);
     } catch (error) {
       setError(`Failed to load more tasks. ${error}`);
     } finally {
@@ -143,13 +108,9 @@ function Home() {
       >
         <Grid container spacing={2}>
           {data &&
-            loadedTasks.map((task) => (
+            tasks.map((task) => (
               <Grid size={{ ...getGridColumns(data.count) }} key={task.id}>
-                <TaskCard
-                  {...task}
-                  onTaskUpdate={handleTaskUpdate}
-                  onTaskDelete={() => handleTaskDelete(task.id)}
-                />
+                <TaskCard {...task} />
               </Grid>
             ))}
         </Grid>
@@ -172,7 +133,6 @@ function Home() {
       {openModal && (
         <Modal
           onModalClose={handleCloseModal}
-          onSaveNewTask={handleSaveNewTask}
           onInputChange={handleInputChange}
           newTask={newTask}
         />

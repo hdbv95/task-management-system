@@ -3,11 +3,14 @@ import { createRoot } from "react-dom/client";
 import { StyledEngineProvider } from "@mui/material/styles";
 import "./index.css";
 import App from "./App.tsx";
+import { TaskProvider } from "./context/TaskContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <StyledEngineProvider injectFirst>
-      <App />
+      <TaskProvider>
+        <App />
+      </TaskProvider>
     </StyledEngineProvider>
   </StrictMode>,
 );
