@@ -10,6 +10,8 @@ services:
       - "8000:8000" # Expose the Django app on port 8000
     environment:
       - PYTHONUNBUFFERED=1
+    networks:
+      - app_network
 
   frontend:
     build:
@@ -20,3 +22,8 @@ services:
       - "5173:5173" # Expose Vite's default dev server port
     depends_on:
       - backend # Ensure the backend is started before the frontend
+    networks:
+      - app_network
+
+networks:
+  app_network:
