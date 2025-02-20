@@ -90,7 +90,7 @@ const TaskCard: React.FC<Task> = (task) => {
           </>
         ) : (
           <>
-            <IconButton onClick={handleEdit}>
+            <IconButton data-testid="editButton" onClick={handleEdit}>
               <Edit />
             </IconButton>
             <IconButton

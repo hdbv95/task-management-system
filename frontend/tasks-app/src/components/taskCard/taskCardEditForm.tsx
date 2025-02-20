@@ -23,6 +23,7 @@ const TaskCardEditForm: React.FC<TaskCardEditFormProps> = ({
 }) => (
   <CardContent className="flex flex-col !space-y-2">
     <TextField
+      data-testid="titleInput"
       label="Title"
       variant="outlined"
       fullWidth
